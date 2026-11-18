@@ -1,25 +1,25 @@
-services:
-  - type: web
-    name: worktrack-api
-    env: node
-    rootDir: backend
-    buildCommand: npm install
-    startCommand: npm start
-    healthCheckPath: /api/v1/health
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 5000
-      - key: MONGODB_URI
-        sync: false
-      - key: JWT_SECRET
-        generateValue: true
-      - key: FRONTEND_URL
-        sync: false
-      - key: CLOUDINARY_CLOUD_NAME
-        sync: false
-      - key: CLOUDINARY_API_KEY
-        sync: false
-      - key: CLOUDINARY_API_SECRET
-        sync: false
+# services:
+#   - type: web
+#     name: worktrack-api
+#     env: node
+#     rootDir: backend
+#     buildCommand: npm install
+#     startCommand: npm start
+#     healthCheckPath: /api/v1/health
+#     envVars:
+#       - key: NODE_ENV
+#         value: production
+#       - key: PORT
+#         value: 5000
+#       - key: MONGODB_URI
+#         sync: false
+#       - key: JWT_SECRET
+#         generateValue: true
+#       - key: FRONTEND_URL
+#         sync: false
+#       - key: CLOUDINARY_CLOUD_NAME
+#         sync: false
+#       - key: CLOUDINARY_API_KEY
+#         sync: false
+#       - key: CLOUDINARY_API_SECRET
+#         sync: false

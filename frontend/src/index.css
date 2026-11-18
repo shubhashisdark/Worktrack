@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-canvas: #F8F9FB;
+    --bg-surface: #FFFFFF;
+    --bg-subtle: #F1F3F6;
+    --text-primary: #202124;
+    --text-secondary: #747B87;
+    --border-default: #E8EAED;
+    --action-primary: #3867D6;
+    --action-primary-hover: #2D55B8;
+    --action-primary-soft: #EEF2FC;
+  }
+
+  * {
+    border-color: var(--border-default);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 20px;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+}
+
+/* Crisp custom scrollbars for enterprise tables and sidebars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D5D9E0;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B4BAC4;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "worktrack-crm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WorkTrack — Enterprise Employee Management & Task Performance System",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "test": "npm --prefix backend test && npm --prefix frontend test",
+    "test:backend": "npm --prefix backend test",
+    "test:frontend": "npm --prefix frontend test",
+    "bootstrap:prod": "npm --prefix backend run bootstrap:prod",
+    "bootstrap:clean": "npm --prefix backend run bootstrap:clean",
+    "seed": "npm --prefix backend run seed"
+  }
+}

@@ -14,6 +14,9 @@ function getTransporter() {
         user: env.smtp.user,
         pass: env.smtp.pass,
       },
+      connectionTimeout: 5000,
+      greetingTimeout: 5000,
+      socketTimeout: 8000,
     });
   }
   return transporter;
@@ -30,13 +33,19 @@ export async function sendMail({ to, subject, text, html }) {
     return { delivered: false, mode: 'console' };
   }
 
-  await activeTransporter.sendMail({
-    from: env.smtp.from,
-    to,
-    subject,
-    text,
-    html,
-  });
-
-  return { delivered: true, mode: 'smtp' };
+  try {
+    const info = await activeTransporter.sendMail({
+      from: env.smtp.from,
+      to,
+      subject,
+      text,
+      html,
+    });
+    console.log(`[MAILER:SMTP] Email sent to ${to}: ${info.messageId}`);
+    return { delivered: true, messageId: info.messageId, mode: 'smtp' };
+  } catch (err) {
+    console.error(`[MAILER:ERROR] Failed to send email via SMTP to ${to}:`, err.message);
+    console.log(`[MAILER:FALLBACK] Reset link for ${to}:\n${text}`);
+    return { delivered: false, error: err.message, mode: 'failed' };
+  }
 }

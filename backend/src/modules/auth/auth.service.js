@@ -91,11 +91,14 @@ export async function forgotPassword({ email }) {
 
   const resetUrl = `${env.frontendUrl}/reset-password/${rawToken}`;
 
-  await sendMail({
+  // Dispatch reset email without blocking the client response
+  sendMail({
     to: user.email,
     subject: 'WorkTrack — Password Reset Request',
     text: `You requested a password reset. Open this link within 15 minutes: ${resetUrl}`,
     html: `<p>You requested a password reset for WorkTrack.</p><p><a href="${resetUrl}">Reset Password</a> (valid for 15 minutes)</p>`,
+  }).catch((err) => {
+    console.error('[AUTH:MAIL] Error dispatching reset email:', err.message);
   });
 
   return {

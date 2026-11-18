@@ -34,11 +34,22 @@ export function createApp() {
   app.set('trust proxy', 1);
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
-  const allowedOrigins = env.frontendUrl.split(',').map((o) => o.trim());
+  const allowedOrigins = (env.frontendUrl || '')
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean);
+
   app.use(
     cors({
       origin(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin) || !env.isProd) {
+        if (
+          !origin ||
+          allowedOrigins.includes(origin) ||
+          !env.isProd ||
+          origin.endsWith('.onrender.com') ||
+          origin.endsWith('.vercel.app') ||
+          origin.endsWith('.pages.dev')
+        ) {
           return callback(null, true);
         }
         return callback(new Error('Not allowed by CORS'));

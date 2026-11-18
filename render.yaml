@@ -58,4 +58,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        value: https://worktrack-api.onrender.com/api/v1
+        value: https://worktrack-api-pde4.onrender.com/api/v1

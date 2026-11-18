@@ -69,6 +69,16 @@ export function createApp() {
 
   app.use('/api/v1', apiRateLimiter);
 
+  app.get(['/', '/health'], (_req, res) => {
+    res.json({
+      name: 'WorkTrack API',
+      status: 'online',
+      version: '1.0.0',
+      health: '/api/v1/health',
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   app.get('/api/v1/health', (_req, res) => {
     const dbReady = mongoose.connection.readyState === 1;
     const statusCode = dbReady ? 200 : 503;

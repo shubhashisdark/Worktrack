@@ -13,7 +13,7 @@ export const login = asyncHandler(async (req, res) => {
   res.cookie(env.cookieName, token, authService.getCookieOptions());
 
   return sendSuccess(res, {
-    data: { user, employee, permissions },
+    data: { user, employee, permissions, token },
     message: 'Signed in successfully',
   });
 });
@@ -42,11 +42,17 @@ export const logout = asyncHandler(async (req, res) => {
 });
 
 export const me = asyncHandler(async (req, res) => {
+  let token = req.cookies?.[env.cookieName];
+  if (!token && req.headers.authorization?.startsWith('Bearer ')) {
+    token = req.headers.authorization.slice(7).trim();
+  }
+
   return sendSuccess(res, {
     data: {
       user: req.user.toSafeJSON(),
       employee: req.employee,
       permissions: req.permissions,
+      token,
     },
   });
 });

@@ -12,10 +12,18 @@ export function AuthProvider({ children }) {
   const refreshMe = useCallback(async () => {
     try {
       const res = await authApi.me();
+      if (res?.data?.token) {
+        try {
+          localStorage.setItem('worktrack_token', res.data.token);
+        } catch {}
+      }
       setUser(res.data.user);
       setEmployee(res.data.employee);
       setPermissions(res.data.permissions || {});
     } catch {
+      try {
+        localStorage.removeItem('worktrack_token');
+      } catch {}
       setUser(null);
       setEmployee(null);
       setPermissions({});
@@ -30,6 +38,11 @@ export function AuthProvider({ children }) {
 
   const login = async (credentials) => {
     const res = await authApi.login(credentials);
+    if (res?.data?.token) {
+      try {
+        localStorage.setItem('worktrack_token', res.data.token);
+      } catch {}
+    }
     setUser(res.data.user);
     setEmployee(res.data.employee);
     setPermissions(res.data.permissions || {});
@@ -40,6 +53,9 @@ export function AuthProvider({ children }) {
     try {
       await authApi.logout();
     } finally {
+      try {
+        localStorage.removeItem('worktrack_token');
+      } catch {}
       setUser(null);
       setEmployee(null);
       setPermissions({});

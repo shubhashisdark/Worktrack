@@ -10,6 +10,21 @@ export const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.request.use(
+  (config) => {
+    try {
+      const token = localStorage.getItem('worktrack_token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch {
+      // Ignore if localStorage is restricted
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export function getApiErrorMessage(error, fallback = 'Something went wrong. Please try again.') {
   const data = error?.response?.data;
   if (data?.error?.details?.length) {
